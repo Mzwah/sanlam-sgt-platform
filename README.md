@@ -94,3 +94,16 @@ POSTGRES_DB=sgt_data_platform_airflow
 
 MINIO_ROOT_USER=sgt_data_platform_minio
 MINIO_ROOT_PASSWORD=sgt_data_platform_minio123
+
+---
+
+
+###  Important Note
+
+## install packages first before running project to avoid error:
+- Python
+- Airflow
+- kafka
+- Docker
+- GitHub
+- and all other necessary extensions
