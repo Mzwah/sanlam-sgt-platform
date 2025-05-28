@@ -1,7 +1,7 @@
 # Social Media Insights Data Platform – POC
 
 Developer: Prophecy Nxumalo
-Reviewer(s): Sanlam Team
+Reviewer(s): Gerard Reisenberg, Resham Sivnarain
 Type: Assessment
 Version: Will be updated in future 
 
