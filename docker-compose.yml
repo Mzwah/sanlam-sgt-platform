@@ -80,7 +80,7 @@ services:
     volumes:
       - minio_data:/data
 
-      spark-master:
+  spark-master:
     image: bitnami/spark:3.5
     container_name: spark-master
     ports:
