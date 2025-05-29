@@ -80,6 +80,28 @@ services:
     volumes:
       - minio_data:/data
 
+      spark-master:
+    image: bitnami/spark:3.5
+    container_name: spark-master
+    ports:
+      - "7077:7077"
+      - "8082:8080"
+    environment:
+      - SPARK_MODE=master
+    volumes:
+      - spark_master_data:/bitnami
+
+  spark-worker:
+    image: bitnami/spark:3.5
+    container_name: spark-worker
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER_URL=spark://spark-master:7077
+    depends_on:
+      - spark-master
+    volumes:
+      - spark_worker_data:/bitnami
+
   ################################
   # Data Layer
   ################################
@@ -101,7 +123,6 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
     ports:
       - "2181:2181"
-
   kafka:
     image: confluentinc/cp-kafka:7.2.1
     depends_on:
@@ -113,6 +134,17 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     ports:
       - "9092:9092"
+      twitter-stream:
+    build: ./twitter-stream
+    container_name: twitter-stream
+    environment:
+      - TWITTER_API_KEY=sanlam_sgt_api_key
+      - TWITTER_API_SECRET=sanlam_sgt_api_secret
+      - TWITTER_ACCESS_TOKEN=sanlam_sgt_access_token
+      - TWITTER_ACCESS_SECRET=sanlam_sgt_access_secret
+      - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+    depends_on:
+      - kafka
 
   ################################
   # Utility
@@ -126,3 +158,5 @@ services:
 volumes:
   postgres_data:
   minio_data:
+  spark_master_data:
+  spark_worker_data:
